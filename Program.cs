@@ -1,52 +1,64 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using System.Text;
-using static System.Math;
+using System.Linq;
 
-namespace lab2
+
+namespace lab1
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int n;
+            double a, b, c;
+            Console.WriteLine("Введите коэффициенты для квадратного уравнения:");
+            Trying(out a);
+            Trying(out b);
+            Trying(out c);
+            Square(ref a, ref b, ref c);
+        }
 
-            do
+
+        public static void Square(ref double a, ref double b, ref double c)
+        {
+            double d = b * b - 4 * a * c;
+            if (d > 0)
             {
-                Console.WriteLine("Введите тип фигуры, площадь которой вы хотите найти:\n" +
-                                 "1 - Прямоугольник\n" + "2 - Квадрат\n" + "3 - круг\n" + "0 - выход из программы");
-                n = int.Parse(Console.ReadLine());
+                double x1 = (-b + Math.Sqrt(d)) / 2 * a;
+                double x2 = (-b - Math.Sqrt(d)) / 2 * a;
+                Console.WriteLine("D > 0, уравнение имеет два корня:");
+                Console.WriteLine("Первый корень уравнения - {0}", x1);
+                Console.WriteLine("Второй корень уравнения - {0}", x2);
+            }
+            else if (d < 0)
+            {
+                Console.WriteLine("D < 0, действительных корней не существует");
+            }
+            else
+            {
+                double x = -b / 2 * a;
+                Console.WriteLine("D = 0, единственный корень уравнения - {0}", x);
+            }
+        }
 
-                switch (n)
-                {
-                    case 1:
-                        Console.Write("Введите Высоту и ширину: ");
-                        Rectangle rect = new Rectangle(double.Parse(Console.ReadLine()), double.Parse(Console.ReadLine()));
-                        rect.Print();
-                        break;
-
-                    case 2:
-                        Console.Write("Введите сторону квадрата: ");
-                        Square sq = new Square(double.Parse(Console.ReadLine()));
-                        sq.Print();
-                        break;
-
-                    case 3:
-                        Console.Write("Введите радиус: ");
-                        Circle cir = new Circle(double.Parse(Console.ReadLine()));
-                        cir.Print();
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        Console.Write("Вы ввели некорректный символ, попробуйте снова: ");
-                        n = int.Parse(Console.ReadLine());
-                        break;
-                }
-
-            } while (n != 0);
+        public static void Trying(out double z)
+        {
+            try
+            {
+                z = double.Parse(Console.ReadLine());
+            }
+            catch (System.FormatException e)
+            {
+                Console.WriteLine("Вы ввели некорректный коэффициент, попробуйте снова");
+                Console.WriteLine(e.Message);
+                Console.Write("Введите коэффициент снова: ");
+                z = double.Parse(Console.ReadLine());
+            }
 
         }
+
     }
 }
+
+
+
